@@ -5,8 +5,7 @@
 - Spread Operator
 - Computed Properties
 - Generators
-- Destructuring (up to 2 or more)
-
+- Destructuring Objects and Arrays
 
 
 
@@ -149,7 +148,96 @@ for (var n of fibonacci) {
 ```
 
 
-## Destructuring (up to 2 or more)
+## Destructuring
 
+The destructuring assignment syntax is a JavaScript expression that makes it possible to unpack values from arrays, or properties from objects, into distinct variables like bellow.
 
+### Destructuring a Array
 
+``` js
+var [a, b] = [10, 20]
+// a = 10, b = 20
+
+// reset of the values to a another variable
+var [a, b, ...c] = [10, 20, 30, 40]
+// a = 10, b = 20, c = [30, 40]
+
+var [a] = [10, 20, 30]
+// a = 10
+
+// with default values
+var [a = 1, b = 2, c = 3] = [10, 20]
+// a = 10, b = 20, c = 3
+
+// ignore the values
+var [a, ,b] = [10, 20, 30]
+// a = 10, b = 30
+
+// return value from a function
+var func = () => [1,2,3,4]
+var [a, b] = func()
+// a = 1, b = 2
+```
+
+### Destructuring a Object
+
+**Access with same keys**
+
+``` js
+var obj = {a: 10, b:20}
+var {a, b} = obj;
+// a = 10, b = 20
+```
+
+**Assign to new keys**
+``` js
+var obj = {a: 10, b:20}
+var {a: x, b: y} = obj;
+// x = 10, y = 20
+```
+
+**Same as arrays we can provide default values**
+``` js
+var obj = {a: 10}
+var {a = 1, b = 2} = obj;
+// a = 10, b = 2
+```
+
+**Assign to new keys with default values**
+``` js
+var obj = {a: 10}
+var {a:x = 1, y:b = 2} = obj;
+// x = 10, y = 2
+```
+
+### Nested Arrays and Object destructuring.
+
+``` js
+var oo = {
+  users: [{imgs: [{url: "http://example.com"}], username: "Ajantha"}],
+  pages: {numOfPages: 1, limit: 5}
+}
+
+var {users:[{imgs:[{url: imgUrl}]}], pages: {limit}} = oo
+
+// imgUrl = "http://example.com", limit = 5
+```
+
+**Pass destructuring object to function.**
+
+``` js
+var PrintUserName = ({user: {username}}) => console.log(username)
+PrintUserName({user: {username: "Ajantha", password: ""}});
+// "Ajantha"
+```
+
+**Use destructuring in a for loop**
+
+``` js
+var users = [{imgs: [{url: "http://example.com"}], username: "Ajantha"}]
+
+for (var {imgs: [{url}], username:un} of users) {
+  console.log(url, un);
+}
+// "http://example.com"  "Ajantha"
+```
